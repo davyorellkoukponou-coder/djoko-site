@@ -265,7 +265,7 @@
 
     try {
       const res = await fetch(
-  `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=AIzaSyBHeY62e36Yhj5-hidzGp8es03cP9VjM4Y`,
+  `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=AIzaSyBHeY62e36Yhj5-hidzGp8es03cP9VjM4Y`,
   {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
