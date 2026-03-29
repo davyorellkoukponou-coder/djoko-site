@@ -264,22 +264,24 @@
     history.push({ role: 'user', content: text });
 
     try {
-      // Appel au proxy Vercel (la clé API est côté serveur)
-      const res = await fetch('/api/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: text, history: history.slice(-8) }) // max 8 messages
-      });
+      const res = await fetch(
+  `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=AIzaSyBHeY62e36Yhj5-hidzGp8es03cP9VjM4Y`,
+  {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      contents: [{ role: 'user', parts: [{ text: text }] }],
+      generationConfig: { maxOutputTokens: 300 }
+    })
+  }
+);
 
-      if (!res.ok) throw new Error('Erreur serveur');
+if (!res.ok) throw new Error('Erreur Gemini');
 
-      const data = await res.json();
-      removeTyping();
+const data = await res.json();
+removeTyping();
 
-      const reply = data.reply || 'Désolé, je n\'ai pas pu générer une réponse.';
-      addMessage('bot', reply);
-      history.push({ role: 'assistant', content: reply });
-
+const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || 'Désolé, je n\'ai pas pu générer une réponse.';
     } catch (err) {
       removeTyping();
       addMessage('bot', 'Désolé, je rencontre une difficulté technique. Réessayez dans un moment ou appelez-nous au +229 97 00 00 00 ! 😊');
