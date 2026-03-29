@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="DJÔKÔ — Le fast-food béninois premium. Saveurs authentiques, expérience moderne. Cotonou, Bénin.">
+  <title>DJÔKÔ — Fast-food Béninois Premium</title>
+
+  <!-- Bootstrap 5 CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <!-- CSS personnalisé -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ════════════════════════════════════════════
+       NAVBAR
+  ════════════════════════════════════════════ -->
+  <nav id="navbar" class="navbar navbar-expand-lg">
+    <div class="container">
+      <!-- Brand -->
+      <a class="navbar-brand nav-brand" href="index.html">DJÔKÔ<span></span></a>
+
+      <!-- Toggler mobile -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+              data-bs-target="#navMenu" aria-controls="navMenu"
+              aria-expanded="false" aria-label="Navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Liens -->
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav ms-auto gap-1">
+          <li class="nav-item"><a class="nav-link" href="index.html">Accueil</a></li>
+          <li class="nav-item"><a class="nav-link" href="apropos.html">À propos</a></li>
+          <li class="nav-item"><a class="nav-link" href="menu.html">Menu</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+        </ul>
+        <a href="menu.html" class="btn-or ms-lg-4 ms-2 mt-2 mt-lg-0">Commander</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ════════════════════════════════════════════
+       HERO
+  ════════════════════════════════════════════ -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+
+    <div class="container">
+      <div class="row align-items-center g-5">
+
+        <!-- Texte -->
+        <div class="col-lg-6">
+          <div class="hero-eyebrow">Cotonou, Bénin · Depuis 2026</div>
+          <h1 class="hero-title reveal">
+            La saveur<br><span class="accent">béninoise</span><br>réinventée
+          </h1>
+          <p class="hero-subtitle reveal" data-delay="100">Le fast-food qui te fait revenir.</p>
+          <p class="hero-desc reveal" data-delay="200">
+            Chez DJÔKÔ, nous sublimions les recettes de rue de nos grand-mères avec une touche moderne,
+            des ingrédients locaux sélectionnés et une expérience qui te rend fier d'être béninois.
+          </p>
+          <div class="hero-actions reveal" data-delay="300">
+            <a href="menu.html" class="btn-or">Voir le menu</a>
+            <a href="apropos.html" class="btn-outline">Notre histoire</a>
+          </div>
+        </div>
+
+        <!-- Image -->
+        <div class="col-lg-6 reveal" data-delay="150">
+          <div class="hero-img-wrapper">
+            <img
+              src="assets/cheff.jpg"
+              alt="Burger DJÔKÔ spécialité béninoise"
+            />
+            <div class="hero-badge">
+              <strong>+12K</strong>
+              clients satisfaits
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Scroll hint -->
+    <div class="scroll-hint">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
+        <path d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z"/>
+      </svg>
+      <span>Découvrir</span>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════
+       CARROUSEL
+  ════════════════════════════════════════════ -->
+  <section id="carrousel" class="py-0">
+    <div id="djokokCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="4000">
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#djokokCarousel" data-bs-slide-to="0" class="active"></button>
+        <button type="button" data-bs-target="#djokokCarousel" data-bs-slide-to="1"></button>
+        <button type="button" data-bs-target="#djokokCarousel" data-bs-slide-to="2"></button>
+      </div>
+      <div class="carousel-inner">
+
+        <div class="carousel-item active">
+          <img src="https://images.unsplash.com/photo-1512152272829-e3139592d56f?w=1400&q=80" alt="Spécialités DJÔKÔ" />
+          <div class="carousel-caption">
+            <h5>Le Burger Djôkô</h5>
+            <p>Pain artisanal, steak local, sauce piment-gingembre maison</p>
+          </div>
+        </div>
+
+        <div class="carousel-item">
+          <img src="https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=1400&q=80" alt="Menu DJÔKÔ" />
+          <div class="carousel-caption">
+            <h5>La Box Amiwo</h5>
+            <p>Pâte de maïs revisitée, poulet grillé aux épices du sud Bénin</p>
+          </div>
+        </div>
+
+        <div class="carousel-item">
+          <img src="https://images.unsplash.com/photo-1553909489-cd47e0907980?w=1400&q=80" alt="Boissons DJÔKÔ" />
+          <div class="carousel-caption">
+            <h5>La Boisson Sobolo</h5>
+            <p>Hibiscus frais pressé maison, une fraîcheur 100% béninoise</p>
+          </div>
+        </div>
+
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#djokokCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#djokokCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+      </button>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════
+       RÉSUMÉ SERVICES (3 cartes)
+  ════════════════════════════════════════════ -->
+  <section style="background: var(--noir-2);">
+    <div class="container">
+      <div class="text-center mb-5">
+        <span class="section-badge">Nos engagements</span>
+        <h2 class="section-title">Pourquoi choisir <span class="accent">DJÔKÔ</span> ?</h2>
+        <div class="divider-or"></div>
+      </div>
+
+      <div class="row g-4">
+
+        <!-- Carte 1 -->
+        <div class="col-md-4 reveal">
+          <div class="menu-card p-4 text-center h-100">
+            <div class="mb-3" style="font-size:2.5rem;">🌿</div>
+            <h4 style="font-family:'Cormorant Garamond',serif; color:var(--or); font-size:1.4rem; margin-bottom:.8rem;">
+              100% Local
+            </h4>
+            <p style="color:var(--gris); font-size:.9rem; line-height:1.7;">
+              Tous nos ingrédients sont sourcés auprès de producteurs béninois.
+              Du champ à l'assiette, nous soutenons l'économie locale.
+            </p>
+          </div>
+        </div>
+
+        <!-- Carte 2 -->
+        <div class="col-md-4 reveal" data-delay="100">
+          <div class="menu-card p-4 text-center h-100">
+            <div class="mb-3" style="font-size:2.5rem;">⚡</div>
+            <h4 style="font-family:'Cormorant Garamond',serif; color:var(--or); font-size:1.4rem; margin-bottom:.8rem;">
+              Rapide & Frais
+            </h4>
+            <p style="color:var(--gris); font-size:.9rem; line-height:1.7;">
+              Votre commande prête en moins de 8 minutes. Aucun compromis sur la fraîcheur —
+              tout est préparé à la commande.
+            </p>
+          </div>
+        </div>
+
+        <!-- Carte 3 -->
+        <div class="col-md-4 reveal" data-delay="200">
+          <div class="menu-card p-4 text-center h-100">
+            <div class="mb-3" style="font-size:2.5rem;">🏆</div>
+            <h4 style="font-family:'Cormorant Garamond',serif; color:var(--or); font-size:1.4rem; margin-bottom:.8rem;">
+              Qualité Premium
+            </h4>
+            <p style="color:var(--gris); font-size:.9rem; line-height:1.7;">
+              Des recettes développées avec des chefs locaux pour vous offrir
+              le meilleur de la cuisine de rue béninoise, elevée au rang de l'art.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- CTA -->
+      <div class="text-center mt-5 reveal">
+        <a href="menu.html" class="btn-or me-3">Découvrir le menu</a>
+        <a href="contact.html" class="btn-outline">Nous contacter</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════
+       FOOTER
+  ════════════════════════════════════════════ -->
+  <footer>
+    <div class="container">
+      <div class="row g-4 mb-4">
+        <div class="col-lg-4">
+          <div class="footer-brand">DJÔKÔ</div>
+          <p class="footer-tagline">Le fast-food béninois qui te fait revenir.</p>
+          <p style="font-size:.85rem; color:var(--gris); margin-top:1rem; max-width:280px;">
+            Sublimer les saveurs de chez nous avec une expérience moderne et accessible.
+          </p>
+        </div>
+        <div class="col-lg-2 col-6">
+          <div class="footer-title">Navigation</div>
+          <ul class="footer-links">
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="apropos.html">À propos</a></li>
+            <li><a href="menu.html">Menu</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-3 col-6">
+          <div class="footer-title">Horaires</div>
+          <ul class="footer-links">
+            <li><a>Lun – Ven : 10h – 22h</a></li>
+            <li><a>Samedi : 10h – 23h</a></li>
+            <li><a>Dimanche : 11h – 21h</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-3">
+          <div class="footer-title">Contact</div>
+          <ul class="footer-links">
+            <li><a href="tel:+22997000000"><i class="bi bi-telephone me-2" style="color:var(--or)"></i>+229 97 00 00 00</a></li>
+            <li><a href="mailto:hello@djoko.bj"><i class="bi bi-envelope me-2" style="color:var(--or)"></i>hello@djoko.bj</a></li>
+            <li><a><i class="bi bi-geo-alt me-2" style="color:var(--or)"></i>Carrefour 3 Banques, Cotonou</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        © 2024 DJÔKÔ — Tous droits réservés · Fast-food béninois premium, Cotonou
+      </div>
+    </div>
+  </footer>
+
+  <!-- ════════════════════════════════════════════
+       CHATBOT
+  ════════════════════════════════════════════ -->
+  <div class="chatbot-bubble" id="chatbotBubble" title="Parler à Djômi">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 3C6.486 3 2 6.925 2 11.75c0 2.353.987 4.491 2.609 6.046L3 21l3.87-1.244C8.261 20.55 10.076 21 12 21c5.514 0 10-3.925 10-8.75S17.514 3 12 3z"/>
+    </svg>
+  </div>
+
+  <div class="chatbot-panel" id="chatbotPanel">
+    <div class="chatbot-header">
+      <div class="chatbot-avatar">D</div>
+      <div>
+        <div class="chatbot-name">Djômi · Assistant DJÔKÔ</div>
+        <div class="chatbot-status">● En ligne</div>
+      </div>
+      <button class="chatbot-close" id="chatbotClose" title="Fermer">✕</button>
+    </div>
+    <div class="chatbot-messages" id="chatbotMessages"></div>
+    <div class="chatbot-input-area">
+      <input type="text" class="chatbot-input" id="chatbotInput"
+             placeholder="Posez votre question…" autocomplete="off" />
+      <button class="chatbot-send" id="chatbotSend" title="Envoyer">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Script personnalisé -->
+  <script src="js/script.js"></script>
+</body>
+</html>
