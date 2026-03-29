@@ -282,6 +282,7 @@ const data = await res.json();
 removeTyping();
 
 const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || 'Désolé, je n\'ai pas pu générer une réponse.';
+      addMessage('bot', reply);
     } catch (err) {
       removeTyping();
       addMessage('bot', 'Désolé, je rencontre une difficulté technique. Réessayez dans un moment ou appelez-nous au +229 97 00 00 00 ! 😊');
