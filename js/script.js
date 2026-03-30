@@ -201,8 +201,6 @@
 
   if (!bubble || !panel) return;
 
-  // Historique de conversation
-  let history = [];
   let isLoading = false;
 
   // Ouvrir / fermer
@@ -249,145 +247,96 @@
     if (el) el.remove();
   }
 
-async function sendMessage() {
-  const text = input.value.trim();
-  if (!text || isLoading) return;
-
-  input.value = '';
-  isLoading = true;
-  sendBtn.disabled = true;
-
-  addMessage('user', text);
-  showTyping();
-  history.push({ role: 'user', content: text });
-
-  // Simulation délai naturel
-  setTimeout(() => {
-    removeTyping();
-    const reply = getReponse(text);
-    addMessage('bot', reply);
-    history.push({ role: 'assistant', content: reply });
-    isLoading = false;
-    sendBtn.disabled = false;
-    input.focus();
-  }, 800);
-}
-const suggest = () => {
-  const s = [
-    "Tu veux voir le menu 😏 ?",
-    "Je peux te recommander un plat 🔥",
-    "Tu veux les prix ou les horaires ?",
-    "Je peux te guider rapidement 😉"
+  /* ── Base de réponses hardcodées ─────────────────────────── */
+  const FAQ = [
+    {
+      keys: ['horaire', 'heure', 'ouvert', 'ferme', 'ouverture', 'fermeture', 'disponible', 'quand'],
+      reply: '🕙 Nous sommes ouverts du lundi au vendredi de 10h à 22h, et le samedi de 10h à 23h. Le dimanche on se repose, mais on revient lundi avec encore plus d\'énergie ! 😄'
+    },
+    {
+      keys: ['adresse', 'localisation', 'où', 'situe', 'trouver', 'emplacement', 'lieu', 'carrefour'],
+      reply: '📍 Vous nous trouverez au Carrefour 3 Banques, Cotonou. C\'est facile à trouver, tout le monde connaît le coin ! 🗺️'
+    },
+    {
+      keys: ['telephone', 'téléphone', 'appeler', 'numero', 'numéro', 'contact', 'joindre'],
+      reply: '📞 Vous pouvez nous appeler au +229 97 00 00 00 ou nous écrire à hello@djoko.bj. On répond vite ! 😊'
+    },
+    {
+      keys: ['menu', 'carte', 'plat', 'manger', 'choisir', 'propose', 'vente'],
+      reply: '🍽️ Notre menu comprend :\n• 🍔 Burgers (Le Burger Djôkô, Le Royal Piment, Le Végétal…)\n• 📦 Boxes (Box frite au poulet, Wrap Akassa, Plateau Brochettes…)\n• 🍟 Accompagnements (frites, alloco, piment sauce…)\n• 🥤 Boissons et desserts\n\nVous pouvez tout voir sur notre page Menu ! 👉'
+    },
+    {
+      keys: ['prix', 'coute', 'coûte', 'combien', 'tarif', 'fcfa', 'cfa', 'cher'],
+      reply: '💰 Nos prix démarrent à 600 FCFA pour les accompagnements. Les burgers sont entre 2 200 et 2 800 FCFA. Les boxes de 3 200 à 4 500 FCFA. Qualité béninoise à prix accessibles ! 🇧🇯'
+    },
+    {
+      keys: ['burger', 'djoko', 'royal', 'végétal', 'vegetal'],
+      reply: '🍔 Nos burgers phares :\n• Le Burger Djôkô – 2 500 FCFA (pain miel de coco, steak 150g, sauce piment-gingembre)\n• Le Royal Piment – 2 800 FCFA\n• Le Végétal – 2 200 FCFA\nTous préparés avec des produits locaux frais !'
+    },
+    {
+      keys: ['box', 'poulet', 'brochette', 'akassa', 'wrap', 'plateau'],
+      reply: '📦 Nos Boxes :\n• Box frite au poulet – 3 200 FCFA\n• Wrap Akassa – 2 700 FCFA\n• Plateau Brochettes (bœuf + poulet, frites de plantain, sauce arachide) – 4 500 FCFA\nParfait pour partager ou pour un repas complet !'
+    },
+    {
+      keys: ['accompagnement', 'frite', 'alloco', 'plantain', 'boisson', 'dessert'],
+      reply: '🍟 Accompagnements & extras :\n• Frites – 1 500 FCFA\n• Alloco (plantain frit) – 1 700 FCFA\n• Boissons à partir de 600 FCFA\n• Desserts à partir de 700 FCFA\nDe quoi compléter votre repas !'
+    },
+    {
+      keys: ['livraison', 'livrer', 'delivery', 'domicile', 'commander'],
+      reply: '🛵 Pour les commandes et livraisons, appelez-nous directement au +229 97 00 00 00 ou passez via notre page Menu. On fera notre maximum pour vous régaler chez vous ! 😋'
+    },
+    {
+      keys: ['réserver', 'reserver', 'reservation', 'réservation', 'table', 'groupe'],
+      reply: '🪑 Pour réserver une table ou organiser un événement de groupe, contactez-nous au +229 97 00 00 00 ou par email à hello@djoko.bj. On s\'occupe de tout !'
+    },
+    {
+      keys: ['histoire', 'propos', 'qui', 'djoko', 'fondateur', 'marque'],
+      reply: '🇧🇯 DJÔKÔ, c\'est le fast-food béninois qui célèbre les saveurs de chez nous avec une expérience moderne et accessible. Notre mission : sublimer les recettes locales pour que tu reviennes toujours ! Découvrez notre histoire sur la page À propos. 💛'
+    },
+    {
+      keys: ['merci', 'super', 'cool', 'génial', 'bravo', 'top'],
+      reply: 'Merci à vous ! 😊 C\'est pour vous que DJÔKÔ existe. N\'hésitez pas si vous avez d\'autres questions !'
+    },
+    {
+      keys: ['bonjour', 'salut', 'hello', 'bonsoir', 'bjr', 'coucou', 'yo'],
+      reply: 'Bonjour ! 👋 Bienvenue chez DJÔKÔ, le fast-food béninois premium. Je suis Djômi, votre assistant. Comment puis-je vous aider ? Menu, horaires, adresse… posez-moi vos questions ! 🍔'
+    },
+    {
+      keys: ['bye', 'au revoir', 'bonne journée', 'merci bonne', 'à bientôt', 'ciao'],
+      reply: 'À très bientôt chez DJÔKÔ ! 👋 Bonne journée et venez nous voir au Carrefour 3 Banques 😄🇧🇯'
+    },
   ];
-  return "\n\n👉 " + s[Math.floor(Math.random() * s.length)];
-};
-function getReponse(msg) {
-  const m = msg.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
-  // Horaires
-  if (m.match(/horaire|heure|ouvert|ferme|quand|disponible/))
-    return "Nous sommes ouverts tous les jours ! Lundi au vendredi de 10h a 22h, le samedi de 10h a 23h et le dimanche de 11h a 21h. On vous attend !";
+  function getAutoReply(text) {
+    const lower = text.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    for (const item of FAQ) {
+      if (item.keys.some(k => lower.includes(k.normalize('NFD').replace(/[\u0300-\u036f]/g, '')))) {
+        return item.reply;
+      }
+    }
+    return '🤔 Je ne suis pas sûr de comprendre votre question. Vous pouvez m\'interroger sur notre menu, nos prix, nos horaires, notre adresse ou nous contacter directement au +229 97 00 00 00 ! 😊';
+  }
 
-  // Adresse / localisation
-  if (m.match(/adresse|ou|localise|situe|trouver|venir|quartier|lieu|plan|maps/))
-    return "Vous nous trouverez au Carrefour des Trois Banques, Akpakpa, Cotonou. Facile d'acces, bien visible depuis la route principale !";
+  function sendMessage() {
+    const text = input.value.trim();
+    if (!text || isLoading) return;
 
-  // Téléphone / contact
-  if (m.match(/telephone|appel|contact|joindre|numero|whatsapp/))
-    return "Vous pouvez nous appeler ou nous ecrire sur WhatsApp au +229 97 00 00 00. Nous repondons rapidement !";
+    input.value = '';
+    isLoading = true;
+    sendBtn.disabled = true;
 
-  // Email
-  if (m.match(/email|mail|message|ecrire/))
-    return "Ecrivez-nous a hello@djoko.bj pour toute demande. Pour les commandes speciales, utilisez commandes@djoko.bj.";
+    addMessage('user', text);
+    showTyping();
 
-  // Menu général
-  if (m.match(/menu|carte|plat|manger|specialite|propose|offre/))
-    return "Notre menu comprend des Burgers, des Boxes, des Accompagnements, des Boissons et des Desserts. Tous prepares avec des ingredients locaux frais ! Rendez-vous sur la page Menu pour tout decouvrir.";
-
-  // Burger
-  if (m.match(/burger|djoko burger|kpoun/))
-    return "Notre star c'est le Burger DJOKO : pain artisanal, steak local 150g et sauce piment-gingembre maison a 2 500 FCFA. Si vous aimez le piment, essayez le Kpoun Burger a 2 800 FCFA — un vrai feu !";
-
-  // Box Amiwo
-  if (m.match(/amiwo|box|wrap|akassa|grillad/))
-    return "La Box Amiwo est notre signature : pate de mais revisitee avec poulet grille aux epices du Sud Benin, a 3 200 FCFA. On a aussi le Wrap Akassa a 2 700 FCFA et la Box Grillades a 4 500 FCFA pour les grandes faims !";
-
-  // Boissons
-  if (m.match(/boisson|boire|sobolo|jus|bissap|hibiscus|eau/))
-    return "Notre boisson signature c'est le Sobolo Maison — hibiscus frais infuse a froid avec miel local et gingembre, a 600 FCFA. On a aussi des Jus Tropicaux frais (mangue, ananas, papaye) a 700 FCFA. Rien d'industriel ici !";
-
-  // Desserts
-  if (m.match(/dessert|sucre|gateau|beignet|glace|coco|mousse/))
-    return "Nos desserts maison : Beignets au Miel (atchomon nappé de miel de coco) a 900 FCFA, et la Mousse Coco-Mangue a 1 100 FCFA. Le peche mignon de DJOKO !";
-
-  // Prix / tarif
-  if (m.match(/prix|combien|coute|tarif|fcfa|cher|budget|payer/))
-    return "Nos prix vont de 600 FCFA pour une boisson jusqu'a 4 500 FCFA pour la Box Grillades. La majorite de nos plats sont entre 2 000 et 3 200 FCFA. Qualite premium, prix accessibles !";
-
-  // Commande / livraison
-  if (m.match(/commande|commander|livr|emporter|place|online|reservation/))
-    return "Pour l'instant on ne fait pas encore de livraison en ligne, mais vous pouvez venir directement ou nous appeler au +229 97 00 00 00 pour une commande a emporter. On prepare tout en moins de 8 minutes !";
-
-  // Temps de preparation
-  if (m.match(/temps|attente|rapide|vite|minutes|preparation/))
-    return "Chez DJOKO, votre commande est prete en moins de 8 minutes ! Tout est prepare a la commande pour garantir la fraicheur. Fast-food ne veut pas dire mauvaise qualite.";
-
-  // Ingredients / local / frais
-  if (m.match(/ingredient|local|frais|bio|sain|qualite|provenance|producteur/))
-    return "100% de nos ingredients sont sources aupres de producteurs beninois locaux. Du champ a l'assiette, nous soutenons l'economie locale et garantissons la fraicheur de chaque plat.";
-
-  // Vegetarien / régime
-  if (m.match(/vegetar|vegan|sans viande|regime|allergi|gluten|intoleran/))
-    return "Oui, nous avons une option vegetarienne : le Beurre-Igname (steak d'igname et pois niebe) a 2 200 FCFA. Pour les allergies specifiques, appelez-nous au +229 97 00 00 00 avant votre visite.";
-
-  // Histoire / fondateurs
-  if (m.match(/histoire|fondateur|cree|origine|debut|kofi|amina|pascal|2022/))
-    return "DJOKO a ete cree en 2022 par trois amis — Kofi, Amina et Pascal — unis par leur passion pour la cuisine de rue beninoise. Partis de 500 000 FCFA en commun, ils ont ouvert DJOKO et fait la queue depasser le pate de maisons des le premier jour !";
-
-  // Valeurs / mission
-  if (m.match(/valeur|mission|vision|philosophie|engagement|fierte/))
-    return "Chez DJOKO, nos trois valeurs fondamentales sont l'Authenticite (recettes inspirees des traditions du Sud Benin), la Communaute (soutien aux producteurs locaux) et l'Innovation (reinventer les classiques sans les trahir).";
-
-  // Avis / recommandation
-  if (m.match(/avis|recommande|conseil|meilleur|populaire|star|favori/))
-    return "Notre plat le plus commande est le Burger DJOKO ! Si c'est votre premiere visite, on vous conseille le combo : Burger DJOKO + Frites de Plantain + Sobolo Maison. Vous ne serez pas decu !";
-
-  // Paiement
-  if (m.match(/paiement|payer|cash|carte|mobile money|momo|flooz/))
-    return "Nous acceptons le cash, le Mobile Money (MTN et Moov) et les paiements par carte. Toutes les options sont disponibles pour votre confort.";
-
-  // Parking / access
-  if (m.match(/parking|garer|acces|bus|taxi|zem|transport/))
-    return "Notre restaurant dispose d'un espace de stationnement. Nous sommes aussi accessible en taxi, zemidjan et bus depuis le carrefour des Trois Banques — un point de repere bien connu a Cotonou !";
-
-  // Evenement / traiteur
-  if (m.match(/evenement|anniversaire|fete|traiteur|groupe|reservation|privatise/))
-    return "Oui, nous organisons des commandes de groupe et des prestations traiteur pour vos evenements ! Contactez-nous a commandes@djoko.bj ou au +229 97 00 00 00 pour en discuter.";
-
-  // Remerciements
-  if (m.match(/merci|super|genial|parfait|excellent|bravo|top|bien/))
-    return "Merci beaucoup ! C'est notre mission de vous satisfaire. N'hesitez pas si vous avez d'autres questions. A bientot chez DJOKO !";
-
-  // Salutations
-  if (m.match(/bonjour|bonsoir|salut|hello|yo|coucou|bonne journee/))
-    return "Bonjour et bienvenue chez DJOKO ! Je suis Djomi, votre assistant. Posez-moi toutes vos questions sur notre menu, nos horaires, notre adresse ou notre histoire. Comment puis-je vous aider ?";
-
-  // Au revoir
-  if (m.match(/au revoir|bye|a bientot|bonne soiree|bonne nuit|ciao|tchao/))
-    return "Au revoir et a tres bientot chez DJOKO ! N'oubliez pas de nous rendre visite au Carrefour des Trois Banques. Bonne journee !";
-
-  // Réponse par défaut
-  const suggestions = [
-  "Tu veux voir nos burgers 🍔 ou nos desserts 🍰 ?",
-  "Je peux te recommander un plat 🔥 ou te montrer le menu.",
-  "Tu cherches plutot un truc rapide ou un bon repas complet ?",
-  "Je peux te dire les prix 💸 ou les horaires ⏰ si tu veux.",
-  "Tu veux notre meilleure recommandation du moment 😏 ?"
-];
-
-const randomSuggestion = suggestions[Math.floor(Math.random() * suggestions.length)];
-
-return "Bonne question ! Pour cette demande, je vous invite a nous contacter directement au +229 97 00 00 00 ou par email a hello@djoko.bj.\n\n👉 " + randomSuggestion;
-}
+    // Simuler un délai naturel (300–700ms)
+    const delay = 300 + Math.random() * 400;
+    setTimeout(() => {
+      removeTyping();
+      addMessage('bot', getAutoReply(text));
+      isLoading = false;
+      sendBtn.disabled = false;
+      input.focus();
+    }, delay);
+  }
 })();
 // update
